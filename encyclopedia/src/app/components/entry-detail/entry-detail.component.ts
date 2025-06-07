@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Entry } from '../../models/entry';
 import { EntryService } from '../../services/entry.service';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-entry-detail',
@@ -14,9 +16,13 @@ import { EntryService } from '../../services/entry.service';
 })
 export class EntryDetailComponent {
   entry$: Observable<Entry | undefined>;
+  categoriesMap$: Observable<Map<string, Category>>;
 
-  constructor(route: ActivatedRoute, private service: EntryService) {
+  constructor(route: ActivatedRoute, private service: EntryService, categoryService: CategoryService) {
     const id = route.snapshot.paramMap.get('id')!;
     this.entry$ = this.service.getEntry(id);
+    this.categoriesMap$ = categoryService.getCategories().pipe(
+      map(list => new Map(list.map(c => [c.id!, c])))
+    );
   }
 }

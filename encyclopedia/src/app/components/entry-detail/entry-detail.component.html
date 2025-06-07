@@ -1,10 +1,13 @@
 <div *ngIf="entry$ | async as entry; else loading">
   <h2>{{ entry.title }}</h2>
   <p class="type">{{ entry.type }}</p>
+  <p class="category" *ngIf="entry.categoryId && (categoriesMap$ | async) as map">
+    Category: {{ map.get(entry.categoryId)?.name }}
+  </p>
   <div class="tags" *ngIf="entry.tags?.length">
     <span *ngFor="let tag of entry.tags">{{ tag }}</span>
   </div>
-  <p class="content">{{ entry.content }}</p>
+  <div class="content" [innerHTML]="entry.content"></div>
   <div *ngIf="entry.relatedIds?.length">
     <h3>Related</h3>
     <ul>

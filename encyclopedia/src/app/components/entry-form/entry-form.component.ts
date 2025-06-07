@@ -4,12 +4,15 @@ import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EntryService } from '../../services/entry.service';
 import { Entry } from '../../models/entry';
-import { switchMap, take } from 'rxjs';
+import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category.service';
+import { QuillModule } from 'ngx-quill';
+import { Observable, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-entry-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, QuillModule],
   templateUrl: './entry-form.component.html',
   styleUrls: ['./entry-form.component.scss']
 })
@@ -17,10 +20,13 @@ export class EntryFormComponent {
   form = this.fb.group({
     title: this.fb.nonNullable.control(''),
     type: this.fb.nonNullable.control(''),
+    categoryId: this.fb.control<string | null>(null),
     tags: this.fb.array<FormControl<string>>([]),
     content: this.fb.nonNullable.control(''),
     relatedIds: this.fb.array<FormControl<string>>([])
   });
+
+  categories$: Observable<Category[]> = this.categoryService.getCategories();
 
   get tags(): FormArray<FormControl<string>> {
     return this.form.controls.tags;
@@ -35,6 +41,7 @@ export class EntryFormComponent {
   constructor(
     private fb: FormBuilder,
     private service: EntryService,
+    private categoryService: CategoryService,
     private router: Router,
     route: ActivatedRoute
   ) {
@@ -46,6 +53,7 @@ export class EntryFormComponent {
           this.form.patchValue({
             title: entry.title,
             type: entry.type,
+            categoryId: entry.categoryId ?? null,
             content: entry.content
           });
           entry.tags?.forEach(t => this.tags.push(this.fb.nonNullable.control(t)));
