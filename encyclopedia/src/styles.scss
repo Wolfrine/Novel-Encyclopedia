@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+body {
+  font-family: 'EB Garamond', serif;
+  background: #f5f2eb;
+  margin: 0;
+  color: #2c2c2c;
+}
+
+h1, h2, h3 {
+  color: #3d2b1f;
+}

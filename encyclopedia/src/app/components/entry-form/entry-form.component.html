@@ -1,0 +1,33 @@
+<h2 *ngIf="entryId; else create">Edit Entry</h2>
+<ng-template #create><h2>Create Entry</h2></ng-template>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <label>
+    Title
+    <input formControlName="title" required>
+  </label>
+  <label>
+    Type
+    <input formControlName="type" required>
+  </label>
+  <div formArrayName="tags">
+    <label>Tags</label>
+    <button type="button" (click)="addTag()">Add Tag</button>
+    <div *ngFor="let tag of tags.controls; let i=index">
+      <input [formControlName]="i">
+      <button type="button" (click)="removeTag(i)">Remove</button>
+    </div>
+  </div>
+  <label>
+    Content
+    <textarea formControlName="content" rows="6"></textarea>
+  </label>
+  <div formArrayName="relatedIds">
+    <label>Related Entry IDs</label>
+    <button type="button" (click)="addRelated()">Add Related</button>
+    <div *ngFor="let r of relatedIds.controls; let i=index">
+      <input [formControlName]="i">
+      <button type="button" (click)="removeRelated(i)">Remove</button>
+    </div>
+  </div>
+  <button type="submit">Save</button>
+</form>

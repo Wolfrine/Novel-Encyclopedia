@@ -1,0 +1,11 @@
+<h2>Entries</h2>
+<div class="entries">
+  <a *ngFor="let entry of entries$ | async" [routerLink]="['/entries', entry.id]" class="entry-link">
+    <h3>{{entry.title}}</h3>
+    <p class="type">{{entry.type}}</p>
+  </a>
+</div>
+<p class="empty" *ngIf="(entries$ | async)?.length === 0">No entries yet.</p>
+<p>
+  <a routerLink="/entries/new">Add New Entry</a>
+</p>
