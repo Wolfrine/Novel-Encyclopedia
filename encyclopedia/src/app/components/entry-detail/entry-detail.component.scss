@@ -1,10 +1,15 @@
+:host {
+  display: block;
+  padding: 1rem;
+}
+
 .type {
-  color: #6a5d4d;
+  color: var(--muted-text);
   font-style: italic;
 }
 .tags span {
   margin-right: 0.5rem;
-  background: #ddd5c4;
+  background: var(--accent-color);
   padding: 0.2rem 0.4rem;
 }
 .content {

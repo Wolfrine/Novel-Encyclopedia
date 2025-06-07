@@ -3,7 +3,7 @@
   <a *ngFor="let c of categories$ | async"
      [routerLink]="['/categories', c.id, 'edit']"
      class="category-link"
-     [ngStyle]="{'background-image': 'url(' + c.imageUrl + ')'}">
+     [style.backgroundImage]="'url(' + c.imageUrl + ')'">
     <h3>{{ c.name }}</h3>
   </a>
 </div>
