@@ -1,7 +1,9 @@
 <h2>Categories</h2>
 <div class="categories">
-  <a *ngFor="let c of categories$ | async" [routerLink]="['/categories', c.id, 'edit']" class="category-link">
-    <img [src]="c.imageUrl" [alt]="c.name" />
+  <a *ngFor="let c of categories$ | async"
+     [routerLink]="['/categories', c.id, 'edit']"
+     class="category-link"
+     [ngStyle]="{'background-image': 'url(' + c.imageUrl + ')'}">
     <h3>{{ c.name }}</h3>
   </a>
 </div>

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { take } from 'rxjs';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-category-form',
@@ -18,6 +19,8 @@ export class CategoryFormComponent {
     name: this.fb.nonNullable.control(''),
     imageUrl: this.fb.nonNullable.control('')
   });
+
+  private storage = inject(Storage);
 
   categoryId?: string;
 
@@ -36,6 +39,15 @@ export class CategoryFormComponent {
         }
       });
     }
+  }
+
+  uploadImage(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const fileRef = ref(this.storage, `categories/${Date.now()}_${file.name}`);
+    uploadBytes(fileRef, file)
+      .then(() => getDownloadURL(fileRef))
+      .then(url => this.form.patchValue({ imageUrl: url }));
   }
 
   save() {
