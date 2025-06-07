@@ -1,0 +1,20 @@
+.entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.entry-link {
+  flex: 1 1 200px;
+  padding: 1rem;
+  background: #f8f5f0;
+  border: 1px solid #ddd5c4;
+  text-decoration: none;
+  color: inherit;
+}
+.type {
+  font-size: 0.8rem;
+  color: #6a5d4d;
+}
+.empty {
+  font-style: italic;
+}

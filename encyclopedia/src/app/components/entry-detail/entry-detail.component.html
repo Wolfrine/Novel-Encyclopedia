@@ -1,0 +1,20 @@
+<div *ngIf="entry$ | async as entry; else loading">
+  <h2>{{ entry.title }}</h2>
+  <p class="type">{{ entry.type }}</p>
+  <div class="tags" *ngIf="entry.tags?.length">
+    <span *ngFor="let tag of entry.tags">{{ tag }}</span>
+  </div>
+  <p class="content">{{ entry.content }}</p>
+  <div *ngIf="entry.relatedIds?.length">
+    <h3>Related</h3>
+    <ul>
+      <li *ngFor="let id of entry.relatedIds">
+        <a [routerLink]="['/entries', id]">{{ id }}</a>
+      </li>
+    </ul>
+  </div>
+  <p>
+    <a [routerLink]="['/entries', entry.id, 'edit']">Edit</a>
+  </p>
+</div>
+<ng-template #loading>Loading...</ng-template>
