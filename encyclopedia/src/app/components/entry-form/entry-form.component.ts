@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EntryService } from '../../services/entry.service';
 import { Entry } from '../../models/entry';
@@ -15,19 +15,19 @@ import { switchMap, take } from 'rxjs';
 })
 export class EntryFormComponent {
   form = this.fb.group({
-    title: '',
-    type: '',
-    tags: this.fb.array<string>([]),
-    content: '',
-    relatedIds: this.fb.array<string>([])
+    title: this.fb.nonNullable.control(''),
+    type: this.fb.nonNullable.control(''),
+    tags: this.fb.array<FormControl<string>>([]),
+    content: this.fb.nonNullable.control(''),
+    relatedIds: this.fb.array<FormControl<string>>([])
   });
 
-  get tags(): FormArray<string> {
-    return this.form.get('tags') as FormArray<string>;
+  get tags(): FormArray<FormControl<string>> {
+    return this.form.controls.tags;
   }
 
-  get relatedIds(): FormArray<string> {
-    return this.form.get('relatedIds') as FormArray<string>;
+  get relatedIds(): FormArray<FormControl<string>> {
+    return this.form.controls.relatedIds;
   }
 
   entryId?: string;
@@ -48,15 +48,15 @@ export class EntryFormComponent {
             type: entry.type,
             content: entry.content
           });
-          entry.tags?.forEach(t => this.tags.push(this.fb.control(t)));
-          entry.relatedIds?.forEach(r => this.relatedIds.push(this.fb.control(r)));
+          entry.tags?.forEach(t => this.tags.push(this.fb.nonNullable.control(t)));
+          entry.relatedIds?.forEach(r => this.relatedIds.push(this.fb.nonNullable.control(r)));
         }
       });
     }
   }
 
   addTag() {
-    this.tags.push(this.fb.control(''));
+    this.tags.push(this.fb.nonNullable.control(''));
   }
 
   removeTag(i: number) {
@@ -64,7 +64,7 @@ export class EntryFormComponent {
   }
 
   addRelated() {
-    this.relatedIds.push(this.fb.control(''));
+    this.relatedIds.push(this.fb.nonNullable.control(''));
   }
 
   removeRelated(i: number) {
