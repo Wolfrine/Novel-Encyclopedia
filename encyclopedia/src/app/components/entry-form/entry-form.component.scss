@@ -11,3 +11,10 @@ label {
 button {
   margin-top: 0.5rem;
 }
+
+quill-editor {
+  .ql-container {
+    height: 200px;
+  }
+  margin-bottom: 1rem;
+}

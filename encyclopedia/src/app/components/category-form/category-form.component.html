@@ -6,8 +6,9 @@
     <input formControlName="name" required>
   </label>
   <label>
-    Image URL
-    <input formControlName="imageUrl" required>
+    Image
+    <input type="file" (change)="uploadImage($event)" accept="image/*" required>
   </label>
+  <img *ngIf="form.value.imageUrl" class="preview" [src]="form.value.imageUrl" alt="Preview" />
   <button type="submit">Save</button>
 </form>
