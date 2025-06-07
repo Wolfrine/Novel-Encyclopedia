@@ -1,11 +1,21 @@
 @import 'quill/dist/quill.snow.css';
+:root {
+  --bg-color: #f5f2eb;
+  --text-color: #2c2c2c;
+  --accent-color: #ddd5c4;
+  --nav-bg-color: #eae3d8;
+  --heading-color: #3d2b1f;
+  --muted-text: #6a5d4d;
+  --dark-text: #333;
+}
+
 body {
   font-family: 'EB Garamond', serif;
-  background: #f5f2eb;
+  background: var(--bg-color);
   margin: 0;
-  color: #2c2c2c;
+  color: var(--text-color);
 }
 
 h1, h2, h3 {
-  color: #3d2b1f;
+  color: var(--heading-color);
 }
