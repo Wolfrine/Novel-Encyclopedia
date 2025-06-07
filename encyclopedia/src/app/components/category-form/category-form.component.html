@@ -1,0 +1,13 @@
+<h2 *ngIf="categoryId; else create">Edit Category</h2>
+<ng-template #create><h2>Create Category</h2></ng-template>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <label>
+    Name
+    <input formControlName="name" required>
+  </label>
+  <label>
+    Image URL
+    <input formControlName="imageUrl" required>
+  </label>
+  <button type="submit">Save</button>
+</form>

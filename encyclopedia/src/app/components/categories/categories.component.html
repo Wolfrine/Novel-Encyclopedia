@@ -1,0 +1,9 @@
+<h2>Categories</h2>
+<div class="categories">
+  <a *ngFor="let c of categories$ | async" [routerLink]="['/categories', c.id, 'edit']" class="category-link">
+    <img [src]="c.imageUrl" [alt]="c.name" />
+    <h3>{{ c.name }}</h3>
+  </a>
+</div>
+<p class="empty" *ngIf="(categories$ | async)?.length === 0">No categories yet.</p>
+<p><a routerLink="/categories/new">Add New Category</a></p>

@@ -9,6 +9,13 @@
     Type
     <input formControlName="type" required>
   </label>
+  <label>
+    Category
+    <select formControlName="categoryId">
+      <option [ngValue]="null">None</option>
+      <option *ngFor="let c of categories$ | async" [value]="c.id">{{ c.name }}</option>
+    </select>
+  </label>
   <div formArrayName="tags">
     <label>Tags</label>
     <button type="button" (click)="addTag()">Add Tag</button>
@@ -19,7 +26,7 @@
   </div>
   <label>
     Content
-    <textarea formControlName="content" rows="6"></textarea>
+    <quill-editor formControlName="content" [style]="{height: '200px'}"></quill-editor>
   </label>
   <div formArrayName="relatedIds">
     <label>Related Entry IDs</label>
