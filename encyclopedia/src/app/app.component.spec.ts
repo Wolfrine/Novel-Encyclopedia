@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterOutlet } from '@angular/router';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -20,10 +21,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('encyclopedia');
   });
 
-  it('should render title', () => {
+  it('should contain a router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, encyclopedia');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });
