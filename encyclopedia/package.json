@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng build && ng run encyclopedia:server",
+    "compile:functions": "npm --prefix ../functions run build",
+    "deploy": "npm run build:ssr && npm run compile:functions && firebase deploy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr": "node dist/encyclopedia/server/main.js"

@@ -1,0 +1,10 @@
+# Node dependencies
+node_modules
+
+# Build output
+functions/dist
+encyclopedia/dist
+
+# Firebase cache
+.firebase
+
