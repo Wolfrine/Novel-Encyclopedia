@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/server",
+    "target": "es2022",
+    "module": "commonjs",
+    "types": ["node"],
+    "incremental": true
+  },
+  "files": ["server.ts"],
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "preserveWhitespaces": false
+  }
+}
