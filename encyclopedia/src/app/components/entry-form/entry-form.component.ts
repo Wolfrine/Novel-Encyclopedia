@@ -7,6 +7,7 @@ import { Entry } from '../../models/entry';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { QuillModule } from 'ngx-quill';
+import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { Observable, switchMap, take } from 'rxjs';
 
 @Component({
@@ -18,6 +19,7 @@ import { Observable, switchMap, take } from 'rxjs';
 })
 export class EntryFormComponent {
   form = this.fb.group({
+    slug: this.fb.nonNullable.control(''),
     title: this.fb.nonNullable.control(''),
     type: this.fb.nonNullable.control(''),
     categoryId: this.fb.control<string | null>(null),
@@ -51,6 +53,7 @@ export class EntryFormComponent {
       this.service.getEntry(id).pipe(take(1)).subscribe(entry => {
         if (entry) {
           this.form.patchValue({
+            slug: entry.slug,
             title: entry.title,
             type: entry.type,
             categoryId: entry.categoryId ?? null,
@@ -79,13 +82,26 @@ export class EntryFormComponent {
     this.relatedIds.removeAt(i);
   }
 
+  async uploadImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    const storage = getStorage();
+    const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    const current = this.form.controls.content.value || '';
+    this.form.controls.content.setValue(current + `<img src="${url}">`);
+    input.value = '';
+  }
+
   save() {
     const value = this.form.value as Entry;
     if (this.entryId) {
       value.id = this.entryId;
-      this.service.updateEntry(value).then(() => this.router.navigate(['/entries', this.entryId]));
+      this.service.updateEntry(value).then(() => this.router.navigate(['/encyclopedia', value.slug]));
     } else {
-      this.service.addEntry(value).then(ref => this.router.navigate(['/entries', ref.id]));
+      this.service.addEntry(value).then(ref => this.router.navigate(['/encyclopedia', value.slug]));
     }
   }
 }

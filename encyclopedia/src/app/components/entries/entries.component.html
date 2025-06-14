@@ -1,6 +1,6 @@
 <h2>Entries</h2>
 <div class="entries">
-  <a *ngFor="let entry of entries$ | async" [routerLink]="['/entries', entry.id]" class="entry-link">
+  <a *ngFor="let entry of entries$ | async" [routerLink]="['/encyclopedia', entry.slug]" class="entry-link">
     <h3>{{entry.title}}</h3>
     <p class="type">{{entry.type}}</p>
     <p class="category" *ngIf="entry.categoryId">Category: {{ entry.categoryId }}</p>

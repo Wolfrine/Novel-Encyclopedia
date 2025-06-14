@@ -2,6 +2,10 @@
 <ng-template #create><h2>Create Entry</h2></ng-template>
 <form [formGroup]="form" (ngSubmit)="save()">
   <label>
+    Slug
+    <input formControlName="slug" required>
+  </label>
+  <label>
     Title
     <input formControlName="title" required>
   </label>
@@ -27,6 +31,7 @@
   <label>
     Content
     <quill-editor formControlName="content" [style]="{height: '200px'}"></quill-editor>
+    <input type="file" (change)="uploadImage($event)">
   </label>
   <div formArrayName="relatedIds">
     <label>Related Entry IDs</label>
