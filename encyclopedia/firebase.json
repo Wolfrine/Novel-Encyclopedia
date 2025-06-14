@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "source": "../functions"
+  },
   "hosting": {
     "public": "dist/encyclopedia/browser",
     "ignore": [
@@ -7,7 +10,7 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      { "source": "**", "destination": "/index.html" }
+      { "source": "**", "function": "ssr" }
     ]
   }
 }
