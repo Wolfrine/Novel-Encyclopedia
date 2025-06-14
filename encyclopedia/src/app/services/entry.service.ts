@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc, docData, Firestore, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { collection, collectionData, doc, docData, Firestore, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
+import { Observable, map } from 'rxjs';
 import { Entry } from '../models/entry';
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +15,11 @@ export class EntryService {
   getEntry(id: string): Observable<Entry | undefined> {
     const entryDoc = doc(this.firestore, `entries/${id}`);
     return docData(entryDoc, { idField: 'id' }) as Observable<Entry>;
+  }
+
+  getEntryBySlug(slug: string): Observable<Entry | undefined> {
+    const entries = query(collection(this.firestore, 'entries'), where('slug', '==', slug));
+    return collectionData(entries, { idField: 'id' }).pipe(map(list => list[0])) as Observable<Entry | undefined>;
   }
 
   addEntry(entry: Entry) {
